@@ -1,6 +1,9 @@
 import sys
 
-from pathlib import Path
+try:
+    from pathlib import Path
+except ImportError:  # Python < 3.4
+    from pathlib2 import Path
 
 import unittest
 
