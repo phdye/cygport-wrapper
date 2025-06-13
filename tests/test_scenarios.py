@@ -2,7 +2,16 @@ import sys
 from pathlib import Path
 
 # Ensure tests import the package from the src layout
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'src'))
+src_dir = Path(__file__).resolve().parents[1] / 'src'
+sys.path.insert(0, str(src_dir))
+
+import os
+# Ensure spawned processes can import the package
+os.environ['PYTHONPATH'] = str(src_dir) + (
+    os.pathsep + os.environ['PYTHONPATH'] if 'PYTHONPATH' in os.environ else ''
+)
+# Use the bundled cygport script when invoking the wrapper
+os.environ['CYGPORT_COMMAND'] = str(Path(__file__).resolve().parents[1] / 'scripts' / 'cygport-stub')
 
 import unittest
 

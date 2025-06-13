@@ -75,7 +75,7 @@ pp = PrettyPrinter(indent=4).pprint
 # from enum import IntEnum
 # class order(IntEnum):
 
-CYGPORT_COMMAND = '/usr/bin/cygport'
+CYGPORT_COMMAND = os.environ.get('CYGPORT_COMMAND', '/usr/bin/cygport')
 
 ordinals = {
     'download'      : 0,
@@ -105,13 +105,17 @@ def main ( argv = sys.argv ) :
     if args['<cygport-file>'] == '.':
         cygports = glob('*.cygport')
         if len(cygports) < 1 :
-            print("cygport:  <cygport-file> is '.' but no .cyport file found.  For usage 'cygport --help'",
-                  file=sys.stderr)
-            raise SystemExit
+            print(
+                "cygport:  No .cyport file found.  For usage 'cygport --help'",
+                file=sys.stderr,
+            )
+            raise SystemExit(1)
         if len(cygports) > 1 :
-            print("cygport:  <cygport-file> is '.' but more than one .cyport file found.  For usage 'cygport --help'",
-                  file=sys.stderr)
-            raise SystemExit
+            print(
+                "cygport:  More than one .cyport file found.  For usage 'cygport --help'",
+                file=sys.stderr,
+            )
+            raise SystemExit(1)
         idx = argv.index('.')
         args['<cygport-file>'] = argv[idx] = cygports[0]
 
@@ -144,15 +148,20 @@ def main ( argv = sys.argv ) :
         # print(f"l : argx  = {argx}")
 
     n_unknown = ordinals['unknown']
+    rc = 0
     for command in commands:
         argz = []
         if logging:
             n = ordinals.get(command, n_unknown)
             argz = [ 'logts', '-t', '-b', f"log/{n}.{command}" ]
         argz += [ *argx, command ]
-        print(f"+ {' '.join(argz)}\n")
-        subprocess.run(argz)
-        print()
+        if logging:
+            print(f"+ {' '.join(argz)}\n")
+        proc = subprocess.run(argz)
+        rc = proc.returncode
+        if logging:
+            print()
+    return rc
 
 #------------------------------------------------------------------------------
 
