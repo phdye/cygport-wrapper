@@ -65,7 +65,7 @@ import subprocess
 from glob import glob
 from copy import copy
 
-from docopt import docopt
+from .vendor import docopt
 
 from cygport import __version__
 
@@ -97,7 +97,7 @@ ordinals = {
 
 def main ( argv = sys.argv ) :
 
-    args = docopt(__doc__, argv=argv[1:], options_first=True, version=__version__ )
+    args = docopt.docopt(__doc__, argv=argv[1:], options_first=True, version=__version__ )
 
     argv[0] = CYGPORT_COMMAND
 
