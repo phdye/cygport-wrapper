@@ -264,6 +264,11 @@ class _BG(ExecutionModifier):
 
 BG = _BG()
 
+class FG(RETCODE):
+    """Foreground execution modifier (simplified)."""
+    def __rand__(self, cmd):
+        cmd.run()
+        return cmd
 
 class Local:
     def __getitem__(self, cmd: str) -> Command:
