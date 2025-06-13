@@ -156,7 +156,7 @@ def main ( argv = sys.argv ) :
         args['<cygport-file>'] = argv[idx] = cygports[0]
 
     cygport_idx = argv.index(args['<cygport-file>'])
-    argx = [ * argv[:cygport_idx+1] ]
+    argx = list(argv[:cygport_idx+1])
     commands = args['<command>']
     # print(f"i : argx  = {argx}")
     # print(f"commands  = {commands}")
@@ -188,10 +188,10 @@ def main ( argv = sys.argv ) :
         argz = []
         if logging:
             n = ordinals.get(command, n_unknown)
-            argz = [ 'logts', '-t', '-b', f"log/{n}.{command}" ]
-        argz += [ *argx, command ]
-        print(f"+ {' '.join(argz)}\n")
-        subprocess.run(argz)
+            argz = ['logts', '-t', '-b', 'log/{}.{}'.format(n, command)]
+        argz += argx + [command]
+        print("+ {}\n".format(' '.join(argz)))
+        subprocess.call(argz)
         print()
 
 sys.exit(main(sys.argv))
