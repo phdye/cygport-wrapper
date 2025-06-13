@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Simplified cygport stub used in tests
+# It ignores all arguments and prints a deterministic error
+
+printf "*** ERROR: SRC_URI must be defined\n" >&2
+exit 1
