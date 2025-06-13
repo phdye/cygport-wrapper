@@ -117,7 +117,7 @@ def format(c, top='src'):
     start()
     for python_file in python_source_files(top='src/.'):
         # -a <= --aggressive : enough to pass flake8
-        verbose_run(c, f"autopep8 --in-place -aaaaaaaa {python_file}")
+        verbose_run(c, "autopep8 --in-place -aaaaaaaa {}".format(python_file))
     separator()
 
 # ------------------------------------------------------------------------------
