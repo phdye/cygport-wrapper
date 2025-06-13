@@ -57,7 +57,7 @@ import os
 import subprocess
 import sys
 
-from docopt import docopt
+from cygport.vendor import docopt
 from glob import glob
 from pprint import PrettyPrinter
 
@@ -137,7 +137,7 @@ ordinals = {
 
 def main ( argv = sys.argv ) :
 
-    args = docopt(__doc__, argv=argv[1:], options_first=True, version=__version__ )
+    args = docopt.docopt(__doc__, argv=argv[1:], options_first=True, version=__version__ )
 
     argv[0] = CYGPORT_COMMAND
 

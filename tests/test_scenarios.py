@@ -15,7 +15,7 @@ os.environ['CYGPORT_COMMAND'] = str(Path(__file__).resolve().parents[1] / 'scrip
 
 import unittest
 
-from plumbum import local, FG, BG, RETCODE
+from cygport.vendor.miniplumbum import local, BG, RETCODE
 
 from chdir import ChDir
 from ansi import ansi_escape
