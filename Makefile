@@ -168,3 +168,16 @@ __error-details :
 	@ echo
 
 #------------------------------------------------------------------------------
+
+s-${PACKAGE_NAME} :
+	make NAME=$$(echo $@ | sed 's/^s-//') create-single
+
+create-single:
+	@ set -x && \
+          name=${NAME} && \
+	  mkdir -p flat && \
+          output=flat/$${name}.py && \
+          PYTHONPATH=src/logtool pyonetrue $${name} --output=$${output} $(SINGLE_ARGS) && \
+          chmod 0755 $${output}
+
+#------------------------------------------------------------------------------
